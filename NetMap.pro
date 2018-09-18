@@ -4,4 +4,10 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.c
+        main.c \
+    roteador.c \
+    terminal.c
+
+HEADERS += \
+    roteador.h \
+    terminal.h
