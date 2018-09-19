@@ -6,8 +6,11 @@ CONFIG -= qt
 SOURCES += \
         main.c \
     roteador.c \
-    terminal.c
+    terminal.c \
+    conexao.c
 
 HEADERS += \
     roteador.h \
-    terminal.h
+    terminal.h \
+    conexao.h \
+    conexao.h

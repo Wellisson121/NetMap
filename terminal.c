@@ -42,9 +42,17 @@ void RemoveTerminal(sentinel *t){
 }
 
 
-void* conectaTerminal(sentinel* t,void* r, int i){
-    if(t != NULL && r != NULL){
-        t->prox = r->rot->ter[i];
-        s->ant =NULL;
-    }
+int FrequenciaTerminal(sentinel* r, char* local){
+    if(r != NULL){
+        int cont = 0;
+        sentinel *op;
+        op = r;
+        while (op->prox != NULL) {
+            if(strcmp(r->ter->local,local) == 0){
+                cont++;
+            }
+            op = op->prox;
+        }
+        return cont;
+    }else return -1;
 }
