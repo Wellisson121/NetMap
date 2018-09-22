@@ -4,11 +4,16 @@
 
 typedef struct terminal Terminal;
 typedef struct cell sentinel;
+typedef struct lista tlista;
 
-sentinel* CadastraTerminal(char* nome, char* local);
+tlista* carregaLista(void);
 
-void RemoveTerminal(sentinel *t);
+Terminal* CadastraTerminal(char* nome, char* local);
 
-int FrequenciaTerminal(sentinel* r, char* local);
+void conectaTerminal(tlista* t, Terminal* s);
+
+void RemoveTerminal(tlista *t, char* nome);
+
+int FrequenciaTerminal(tlista* r, char* local);
 
 #endif // TERMINAL_H

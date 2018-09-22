@@ -1,88 +1,126 @@
 #include "roteador.h"
-#include "terminal.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX 255
+
 
 
 struct roteador{
   char* nome;
   char* operadora;
-  Terminal *ter[MAX];/*prox*/
   long int qtdTerminais;
 };
 
 struct cel{
     Router* rot;
     Sentry* prox;
-    Sentry* ant;
+};
+
+struct lista{
+    Sentry* primeiro;
+    Sentry* ultimo;
 };
 
 /*typedef struct roteador Router;
 typedef struct cel Sentry;
 typedef struct lista List;*/
 
-
-
-
-/*inicializa um tipo roteador e o insere na primeira posicao da lista*/
-Sentry* CadastraRoteador(Sentry* s,char* roteador, char* operadora){
-    s = (Sentry*)malloc(sizeof(Sentry));
-    s->rot = (Router*)malloc(sizeof(Router));
-    s->rot->nome = (char*)malloc((strlen(roteador)+1) * sizeof(char));
-    s->rot->operadora = (char*)malloc((strlen(operadora)+1) * sizeof(char));
-    strcpy(s->rot->nome,roteador);
-    strcpy(s->rot->operadora,operadora);
-    s->rot->qtdTerminais = 0;
-    s->ant = NULL;
-    s->prox = s;
-    return s;
+List* carregaLista(){
+    List* l;
+    l = (List*)malloc(sizeof (List));
+    l->primeiro = NULL;
+    l->ultimo = NULL;
+    return l;
 }
 
-void ConectaRoteadores(Sentry* r, Sentry* s){
-    if(r != NULL && s != NULL){
-        r->prox = s->ant;
-        s->ant = r->prox;
+
+/*inicializa um tipo roteador */
+Router* CadastraRoteador(char* roteador, char* operadora, int id){
+    Router* s;
+    s = (Router*)malloc(sizeof(Router));
+    s->nome = (char*)malloc((strlen(roteador)+1) * sizeof(char));
+    s->operadora = (char*)malloc((strlen(operadora)+1) * sizeof(char));
+    strcpy(s->nome,roteador);
+    strcpy(s->operadora,operadora);
+    s->qtdTerminais = id;
+    return s;
+}
+/*insere o roteador na lista*/
+void ConectaRoteador(Router* r, List* s){
+    Sentry* t;
+    t = (Sentry*)malloc(sizeof (Sentry));
+    t->rot = r;
+    t->prox = s->primeiro;
+    s->primeiro = t;
+    if(s->ultimo == NULL){
+        s->ultimo = t;
     }
 }
 
 
-void RemoveRoteador(Sentry* r){
-    long int i;
-    free(r->rot->nome);
-    free(r->rot->operadora);
-    for(i = r->rot->qtdTerminais;i > 0;i--)
-       free(r->rot->ter[i]);
-    free(r->rot);
-    free(r);
+void RemoveRoteador(List* r, char* nome){
+   Sentry* prim = r->primeiro;
+   Sentry* ult = NULL;
+   while ((prim != NULL) && (strcmp(prim->rot->nome,nome) != 0)) {
+        ult = prim;
+        prim = prim->prox;
+   }
+
+   if(prim == r->primeiro && prim == r->ultimo){
+        r->primeiro = r->ultimo;
+        r->ultimo = NULL;
+   }
+
+   if(prim == r->ultimo){
+        r->ultimo = ult;
+        ult->prox = NULL;
+   }
+
+   if(prim == r->primeiro){
+       r->primeiro = prim->prox;
+   }else{
+       ult->prox = prim->prox;
+   }
+
+   free(prim->rot->nome);
+   free(prim->rot->operadora);
+   free(prim->rot);
+   free(prim);
 }
 
-int FrequenciaOperadora(Sentry* r, char* operadora){
+int FrequenciaOperadora(List* r, char* operadora){
     if(r != NULL){
         int cont = 0;
-        Sentry *op;
-        op = r;
-        while (op->prox != NULL) {
-            if(strcmp(r->rot->operadora,operadora) == 0){
+        Sentry *p = r->primeiro;
+        Sentry *u = NULL;
+        while (p != NULL) {
+            if(strcmp(p->rot->operadora,operadora) == 0){
                 cont++;
+            }else{
+                u = p;
+                p = p->prox;
             }
-            op = op->prox;
+
         }
         return cont;
     }else return -1;
 }
 
 
-void EncerraLista(Sentry* t){
+void EncerraLista(List* t){
     if(t != NULL){
-        Sentry* new = NULL;
-        while (t!=NULL) {
-            new = t;
-            t=t->prox;
-            RemoveRoteador(new);
+        Sentry* new = t->primeiro;
+        Sentry* tmp;
+        while (new !=NULL) {
+            tmp = new->prox;
+            free(new->rot->nome);
+            free(new->rot->operadora);
+            free(new->rot);
+            free(new);
+            new = tmp;
         }
-        free(new);
+        free(t);
+
     }
 }
