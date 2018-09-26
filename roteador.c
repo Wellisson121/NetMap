@@ -1,11 +1,11 @@
 #include "roteador.h"
 #include "terminal.h"
+#include "conexao.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define MAX 255
-
 
 struct roteador{
   char* nome;
@@ -20,17 +20,10 @@ struct cel{
     Sentry* ant;
 };
 
-/*typedef struct roteador Router;
-typedef struct cel Sentry;
-typedef struct lista List;*/
-
-
-
-
 /*inicializa um tipo roteador e o insere na primeira posicao da lista*/
 Sentry* CadastraRoteador(Sentry* s,char* roteador, char* operadora){
     s = (Sentry*)malloc(sizeof(Sentry));
-    s->rot = (Router*)malloc(sizeof(Router));
+    s->rot = (Router*)malloc(sizeof(Router));//? --> nao entendi isso
     s->rot->nome = (char*)malloc((strlen(roteador)+1) * sizeof(char));
     s->rot->operadora = (char*)malloc((strlen(operadora)+1) * sizeof(char));
     strcpy(s->rot->nome,roteador);
@@ -48,7 +41,7 @@ void ConectaRoteadores(Sentry* r, Sentry* s){
     }
 }
 
-
+//na remocao ta dando erro
 void RemoveRoteador(Sentry* r){
     long int i;
     free(r->rot->nome);
@@ -73,7 +66,6 @@ int FrequenciaOperadora(Sentry* r, char* operadora){
         return cont;
     }else return -1;
 }
-
 
 void EncerraLista(Sentry* t){
     if(t != NULL){

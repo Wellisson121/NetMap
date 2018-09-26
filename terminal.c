@@ -1,5 +1,6 @@
 #include "terminal.h"
 #include "roteador.h"
+#include "conexao.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,7 +9,6 @@ struct terminal{
     char* nome;
     char* local;
     void* rot;
-
 };
 
 struct cell{
@@ -17,10 +17,6 @@ struct cell{
     sentinel* prox;
 };
 
-/*
-typedef struct terminal Terminal;
-typedef struct cell sentinel;
-*/
 sentinel* CadastraTerminal(char* nome, char* local){
     sentinel* t;
     t = (sentinel*)malloc(sizeof (sentinel));
@@ -40,7 +36,6 @@ void RemoveTerminal(sentinel *t){
     free(t->ter);
     free(t);
 }
-
 
 int FrequenciaTerminal(sentinel* r, char* local){
     if(r != NULL){
