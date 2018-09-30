@@ -9,7 +9,7 @@
 struct roteador{
   char* nome;
   char* operadora;
-  long int qtdTerminais;
+  long int idTerminais;
 };
 
 struct cel{
@@ -20,6 +20,7 @@ struct cel{
 struct lista{
     Sentry* primeiro;
     Sentry* ultimo;
+    int qtdroteadores;/*diz quantos roteadores tem,para não percorrer a lista atrás dessa info */
 };
 
 /*typedef struct roteador Router;
@@ -31,6 +32,7 @@ List* carregaLista(){
     l = (List*)malloc(sizeof (List));
     l->primeiro = NULL;
     l->ultimo = NULL;
+    l->qtdroteadores = 0;
     return l;
 }
 
@@ -43,7 +45,7 @@ Router* CadastraRoteador(char* roteador, char* operadora, int id){
     s->operadora = (char*)malloc((strlen(operadora)+1) * sizeof(char));
     strcpy(s->nome,roteador);
     strcpy(s->operadora,operadora);
-    s->qtdTerminais = id;
+    s->idTerminais = id;
     return s;
 }
 /*insere o roteador na lista*/
@@ -56,6 +58,7 @@ void ConectaRoteador(Router* r, List* s){
     if(s->ultimo == NULL){
         s->ultimo = t;
     }
+    s->primeiro++;
 }
 
 
@@ -87,6 +90,7 @@ void RemoveRoteador(List* r, char* nome){
    free(prim->rot->operadora);
    free(prim->rot);
    free(prim);
+   r->primeiro--;
 }
 
 int FrequenciaOperadora(List* r, char* operadora){

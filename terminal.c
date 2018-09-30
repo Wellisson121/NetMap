@@ -17,7 +17,7 @@ struct cell{
 struct lista{
     sentinel* primeiro;
     sentinel* ultimo;
-
+    int qtdTerminais;
 };
 /*
 typedef struct terminal Terminal;
@@ -29,6 +29,7 @@ tlista* carregaLista(void){
     l = (tlista*)malloc(sizeof (tlista));
     l->primeiro = NULL;
     l->ultimo = NULL;
+    l->qtdTerminais = 0;
     return l;
 }
 
@@ -53,6 +54,7 @@ void conectaTerminal(tlista* t, Terminal* s){
     if(t->ultimo == NULL){
         t->ultimo = r;
     }
+    t->qtdTerminais++;
 }
 
 /*remove o terminal da lista*/
@@ -83,6 +85,7 @@ void RemoveTerminal(tlista *t, char* nome){
    free(prim->ter->local);
    free(prim->ter);
    free(prim);
+   t->qtdTerminais--;
 }
 
 int FrequenciaTerminal(tlista* r, char* local){
