@@ -1,28 +1,62 @@
 #include "conexao.h"
+#include "roteador.h"
+#include "terminal.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 struct conexao{
-    int no;/*numero de vertices*/
-    int ramos;/*numero de arcos ou arestas*/
-    Conexao** adjacencias;
+    Router* roteador;
+    Terminal* terminal;
 };
 
 
 struct malha{
-    void* equipamento;/*roteador ou terminal*/
+    Conexao* equipamento;
+    Conexao* equipamento2;
     Conexao* prox;
-    long int id;/*identifica se o equipamento e roteador ou terminal*/
 };
 
-/*inicializa o grafo*/
-Malha* criaMalha(void* equipamento, Conexao* prox){
+struct lista{
+    Malha* primeiro;
+    Malha* ultimo;
+};
+
+/*comentario -> exemplo
+int i, j;
+int** mat = (int**)malloc(linhas * sizeof(int*));
+for(i = 0; i < linhas; i++){
+  mat[i] = (int*)malloc(colunas * sizeof(int));
+}
+*/
+
+
+Lista3* criaLista(){
+    Lista3* l;
+    l = (Lista3*)malloc(sizeof (Lista3));
+    l->primeiro = NULL;
+    l->ultimo = NULL;
+    return l;
+}
+
+
+Malha* criaMalha(Lista3* l, Router* r, Terminal* t){
     Malha* m;
     m = (Malha*)malloc(sizeof (Malha));
-    m->equipamento = equipamento;
-    m->prox = prox;
+    m->equipamento = criaConexao(m->equipamento,r,t);
+    l->primeiro = m;
+    m->prox = NULL;
+    if(l->ultimo == NULL){
+        l->ultimo = m;
+    }
     return m;
+}
+
+Conexao* criaConexao(Conexao* eq, Router* r, Terminal* t){
+    eq = (Conexao*)malloc(sizeof (Conexao));
+    eq->roteador = r;
+    eq->terminal = t;
+    return eq;
 }
 
 int Vertices(int roteadores, int terminais){

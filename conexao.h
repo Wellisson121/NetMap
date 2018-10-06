@@ -4,17 +4,20 @@
 #include "roteador.h"
 #include "terminal.h"
 
-#define ROT 1;
-#define TER 2;
 
 typedef struct conexao Conexao;
 typedef struct malha Malha;
+typedef struct lista Lista3;
 
-
-Malha* criaMalha(void* equipamento, Conexao* prox);
+Lista3* criaLista(void);
 /* Diz quantos roteadores e treminais existem no programa para
 * serem usados na nalocacao dos vertices
 */
+
+Malha* criaMalha(Lista3* l, Router* r, Terminal* t);
+
+Conexao* criaConexao(Conexao* eq, Router* r, Terminal* t);
+
 int Vertices(int roteadores, int terminais);
 
 Conexao* iniciaConexao(int no);
