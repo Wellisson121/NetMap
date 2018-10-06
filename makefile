@@ -1,17 +1,20 @@
 ### Makefile ###
-all: prog
+all: netMap
 
-prog: proglista.o lista.o
-	gcc proglista.o lista.o -o prog
+netMap: conexao.o terminal.o roteador.o
+	gcc conexao.o terminal.o roteador.o -o netMap
 
-lista.o: lista.c
-	gcc -c lista.c
+conexao.o: conexao.c
+	gcc -c conexao.c
 
-proglista.o: proglista.c
-	gcc -c proglista.c
+terminal.o: terminal.c
+	gcc -c terminal.c
+
+roteador.o: roteador.c
+	gcc -c roteador.c
 
 clean:
 	rm -rf *.o
 
-run: prog
-	./prog
+run: netMap
+	./netMap
