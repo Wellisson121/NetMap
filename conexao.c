@@ -6,14 +6,14 @@
 #include <string.h>
 
 struct conexao{
-    Router* roteador;
-    Terminal* terminal;
+    Router* rot;
+    List* roteador;
+    tlista* terminal;
 };
 
 
 struct malha{
     Conexao* equipamento;
-    Conexao* equipamento2;
     Conexao* prox;
 };
 
@@ -21,14 +21,6 @@ struct lista{
     Malha* primeiro;
     Malha* ultimo;
 };
-
-/*comentario -> exemplo
-int i, j;
-int** mat = (int**)malloc(linhas * sizeof(int*));
-for(i = 0; i < linhas; i++){
-  mat[i] = (int*)malloc(colunas * sizeof(int));
-}
-*/
 
 
 Lista3* criaLista(){
@@ -40,52 +32,74 @@ Lista3* criaLista(){
 }
 
 
-Malha* criaMalha(Lista3* l, Router* r, Terminal* t){
+Malha* criaMalha(Lista3* l){
     Malha* m;
     m = (Malha*)malloc(sizeof (Malha));
-    m->equipamento = criaConexao(m->equipamento,r,t);
+    m->equipamento->roteador = carregaLista();
+    m->equipamento->terminal = carregaLista();
+    m->prox = l->primeiro;
     l->primeiro = m;
-    m->prox = NULL;
     if(l->ultimo == NULL){
         l->ultimo = m;
     }
     return m;
 }
 
-Conexao* criaConexao(Conexao* eq, Router* r, Terminal* t){
-    eq = (Conexao*)malloc(sizeof (Conexao));
-    eq->roteador = r;
-    eq->terminal = t;
-    return eq;
-}
+
 
 int Vertices(int roteadores, int terminais){
     return roteadores + terminais;
 }
 
 
-
-Conexao* iniciaConexao(int no){
-    int i;
-    Conexao* c;
-    c = (Conexao*)malloc(sizeof (Conexao));
-    c->no = no;
-    c->ramos = 0;
-    c->adjacencias = (Conexao**)malloc(no * sizeof (Conexao*));
-    for(i = 0; i < no; i++){
-        c->adjacencias[i] = NULL;
+void iniciaConexaoRoteadores(Router* r, Router* s, Lista3* l){
+    Malha* m = l->primeiro;
+    if(m == NULL){
+        m->equipamento->rot = r;
     }
-    return c;
+    ConectaRoteador(s,m->equipamento->roteador);
 }
 
-void insereVertice(Conexao* c, void* vertice1, void* vertice2){
-    Malha* m;
-    m = c->adjacencias[vertice1];
-    while (m != NULL) {
-        if(m->equipamento == vertice2){
-            return;
-        }
-        c->adjacencias[vertice1] = criaMalha(vertice2,c->adjacencias[vertice1]);
+/*verifica se um dado roteador existe na lista de enlaces*/
+int existe(Lista3* l, char* nome){
+    Malha* m = l->primeiro;
+    Malha* u = NULL;
+    while (m != NULL && buscaRoteador(m->equipamento->roteador,nome)!=m->equipamento->rot) {
+        u = m;
         m = m->prox;
+    }
+    if(m ==NULL){
+        return 0;
+    }else{
+        return 1;
+    }
+}
+
+
+void iniciaConexaoTerminal(Lista3* l, Router *r, tlista* t, Terminal* s){
+    Malha* m = l->primeiro;
+    Malha* u = NULL;
+    while (m != NULL && m->equipamento->rot != r) {
+        u = m;
+        m = m->prox;
+    }
+    if(m == NULL){
+        printf("Roteador nao existe!\n");
+    }
+    if(m->equipamento->rot == r){
+        conectaTerminal(t,s);
+    }
+}
+
+
+void removeConexaoRoteadores(Lista3* m,List* rot, char* nome){
+    Malha* prim = m->primeiro;
+    Malha* ult = NULL;
+    while (m != NULL && prim->equipamento->rot != rot) {
+        ult = prim;
+        prim = prim->prox;
+    }
+    if(prim->equipamento->rot == rot){
+        RemoveRoteador(rot,nome);
     }
 }

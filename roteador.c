@@ -9,7 +9,7 @@
 struct roteador{
   char* nome;
   char* operadora;
-  long int idTerminais;
+
 };
 
 struct cel{
@@ -20,7 +20,6 @@ struct cel{
 struct lista{
     Sentry* primeiro;
     Sentry* ultimo;
-    int qtdroteadores;/*diz quantos roteadores tem,para não percorrer a lista atrás dessa info */
 };
 
 /*typedef struct roteador Router;
@@ -32,20 +31,18 @@ List* carregaLista(){
     l = (List*)malloc(sizeof (List));
     l->primeiro = NULL;
     l->ultimo = NULL;
-    l->qtdroteadores = 0;
     return l;
 }
 
 
 /*inicializa um tipo roteador */
-Router* CadastraRoteador(char* roteador, char* operadora, int id){
+Router* CadastraRoteador(char* roteador, char* operadora){
     Router* s;
     s = (Router*)malloc(sizeof(Router));
     s->nome = (char*)malloc((strlen(roteador)+1) * sizeof(char));
     s->operadora = (char*)malloc((strlen(operadora)+1) * sizeof(char));
     strcpy(s->nome,roteador);
     strcpy(s->operadora,operadora);
-    s->idTerminais = id;
     return s;
 }
 /*insere o roteador na lista*/
@@ -58,7 +55,7 @@ void ConectaRoteador(Router* r, List* s){
     if(s->ultimo == NULL){
         s->ultimo = t;
     }
-    s->primeiro++;
+
 }
 
 
@@ -90,7 +87,7 @@ void RemoveRoteador(List* r, char* nome){
    free(prim->rot->operadora);
    free(prim->rot);
    free(prim);
-   r->primeiro--;
+
 }
 
 int FrequenciaOperadora(List* r, char* operadora){
@@ -109,6 +106,22 @@ int FrequenciaOperadora(List* r, char* operadora){
         }
         return cont;
     }else return -1;
+}
+
+Router* buscaRoteador(List* t,char* nome){
+    Sentry* prim = t->primeiro;
+    Sentry* ult = NULL;
+    while ((prim != NULL) && (strcmp(prim->rot->nome,nome) != 0)) {
+         ult = prim;
+         prim = prim->prox;
+    }
+    if(prim == NULL){
+        printf("Roteador inexistente!");
+        return NULL;
+    }
+    if(strcmp(prim->rot->nome,nome) == 0){
+        return prim->rot;
+    }
 }
 
 

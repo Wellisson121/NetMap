@@ -10,18 +10,15 @@ typedef struct malha Malha;
 typedef struct lista Lista3;
 
 Lista3* criaLista(void);
-/* Diz quantos roteadores e treminais existem no programa para
-* serem usados na nalocacao dos vertices
-*/
 
-Malha* criaMalha(Lista3* l, Router* r, Terminal* t);
-
-Conexao* criaConexao(Conexao* eq, Router* r, Terminal* t);
+Malha* criaMalha(Lista3* l);
 
 int Vertices(int roteadores, int terminais);
 
-Conexao* iniciaConexao(int no);
+void iniciaConexaoRoteadores(Router* r, Router* s, Lista3* l);
 
-void insereVertice(Conexao* c, void* vertice1, void* vertice2);
+void iniciaConexaoTerminal(Lista3* l, Router *r, tlista* t, Terminal* s);
+
+void removeConexaoRoteadores(Lista3* m,List* rot, char* nome);
 
 #endif // CONEXAO_H
