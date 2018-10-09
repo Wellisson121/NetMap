@@ -17,7 +17,7 @@ struct cell{
 struct lista{
     sentinel* primeiro;
     sentinel* ultimo;
-    int qtdTerminais;
+
 };
 /*
 typedef struct terminal Terminal;
@@ -29,7 +29,7 @@ tlista* carregaLista(void){
     l = (tlista*)malloc(sizeof (tlista));
     l->primeiro = NULL;
     l->ultimo = NULL;
-    l->qtdTerminais = 0;
+
     return l;
 }
 
@@ -54,7 +54,7 @@ void conectaTerminal(tlista* t, Terminal* s){
     if(t->ultimo == NULL){
         t->ultimo = r;
     }
-    t->qtdTerminais++;
+
 }
 
 /*remove o terminal da lista*/
@@ -85,8 +85,24 @@ void RemoveTerminal(tlista *t, char* nome){
    free(prim->ter->local);
    free(prim->ter);
    free(prim);
-   t->qtdTerminais--;
+
 }
+
+Terminal* buscaTerminal(tlista* t,char* nome){
+    sentinel* prim = t->primeiro;
+    sentinel* ult = NULL;
+    while ((prim != NULL) && (strcmp(prim->ter->nome,nome) != 0)) {
+         ult = prim;
+         prim = prim->prox;
+    }
+    if(prim == NULL){
+        return NULL;
+    }
+    if(strcmp(prim->ter->nome,nome) == 0){
+        return prim->ter;
+    }
+}
+
 
 int FrequenciaTerminal(tlista* r, char* local){
     if(r != NULL){
@@ -104,4 +120,19 @@ int FrequenciaTerminal(tlista* r, char* local){
         }
         return cont;
     }else return -1;
+}
+
+void EncerraListaTerminais(tlista* t){
+    if(t != NULL){
+        sentinel* novo = t->primeiro;
+        sentinel* temp;
+        while (novo != NULL) {
+            temp = novo->prox;
+            free(novo->ter->nome);
+            free(novo->ter->local);
+            free(novo->ter);
+            novo = temp;
+        }
+        free(t);
+    }
 }

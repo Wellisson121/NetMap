@@ -47,11 +47,6 @@ Malha* criaMalha(Lista3* l){
 
 
 
-int Vertices(int roteadores, int terminais){
-    return roteadores + terminais;
-}
-
-
 void iniciaConexaoRoteadores(Router* r, Router* s, Lista3* l){
     Malha* m = l->primeiro;
     if(m == NULL){
@@ -68,7 +63,7 @@ int existe(Lista3* l, char* nome){
         u = m;
         m = m->prox;
     }
-    if(m ==NULL){
+    if(m == NULL){
         return 0;
     }else{
         return 1;
@@ -83,9 +78,7 @@ void iniciaConexaoTerminal(Lista3* l, Router *r, tlista* t, Terminal* s){
         u = m;
         m = m->prox;
     }
-    if(m == NULL){
-        printf("Roteador nao existe!\n");
-    }
+
     if(m->equipamento->rot == r){
         conectaTerminal(t,s);
     }
@@ -101,5 +94,23 @@ void removeConexaoRoteadores(Lista3* m,List* rot, char* nome){
     }
     if(prim->equipamento->rot == rot){
         RemoveRoteador(rot,nome);
+    }
+}
+
+
+void EncerraListaConexoes(Lista3* l){
+    if(l != NULL){
+        Malha* novo = l->primeiro;
+        Malha* t;
+        while (novo != NULL) {
+            t = novo->prox;
+            LiberaRoteador(novo->equipamento->rot);
+            EncerraLista(novo->equipamento->roteador);
+            EncerraListaTerminais(novo->equipamento->terminal);
+            free(novo->equipamento);
+            free(novo);
+            novo = t;
+        }
+        free(l);
     }
 }

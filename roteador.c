@@ -116,12 +116,17 @@ Router* buscaRoteador(List* t,char* nome){
          prim = prim->prox;
     }
     if(prim == NULL){
-        printf("Roteador inexistente!");
         return NULL;
     }
     if(strcmp(prim->rot->nome,nome) == 0){
         return prim->rot;
     }
+}
+
+void LiberaRoteador(Router* r){
+    free(r->nome);
+    free(r->operadora);
+    free(r);
 }
 
 
@@ -131,10 +136,7 @@ void EncerraLista(List* t){
         Sentry* tmp;
         while (new !=NULL) {
             tmp = new->prox;
-            free(new->rot->nome);
-            free(new->rot->operadora);
-            free(new->rot);
-            free(new);
+            LiberaRoteador(new->rot);
             new = tmp;
         }
         free(t);

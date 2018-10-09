@@ -7,10 +7,12 @@ SOURCES += \
         main.c \
     roteador.c \
     terminal.c \
-    conexao.c
+    conexao.c \
+    learquivo.c
 
 HEADERS += \
     roteador.h \
     terminal.h \
     conexao.h \
-    conexao.h
+    conexao.h \
+    learquivo.h

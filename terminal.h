@@ -14,6 +14,10 @@ void conectaTerminal(tlista* t, Terminal* s);
 
 void RemoveTerminal(tlista *t, char* nome);
 
+Terminal* buscaTerminal(tlista* t,char* nome);
+
 int FrequenciaTerminal(tlista* r, char* local);
+
+void EncerraListaTerminais(tlista* t);
 
 #endif // TERMINAL_H
