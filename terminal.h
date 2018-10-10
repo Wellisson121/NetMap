@@ -6,7 +6,7 @@ typedef struct terminal Terminal;
 typedef struct cell sentinel;
 typedef struct lista tlista;
 
-tlista* carregaLista(void);
+tlista* carregaListaTerminal(void);
 
 Terminal* CadastraTerminal(char* nome, char* local);
 
@@ -17,6 +17,8 @@ void RemoveTerminal(tlista *t, char* nome);
 Terminal* buscaTerminal(tlista* t,char* nome);
 
 int FrequenciaTerminal(tlista* r, char* local);
+
+char* nomeTerminal(Terminal* t);
 
 void EncerraListaTerminais(tlista* t);
 

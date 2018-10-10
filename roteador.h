@@ -18,6 +18,8 @@ int FrequenciaOperadora(List* r, char* operadora);
 
 Router* buscaRoteador(List* t,char* nome);
 
+char* nomeRoteador(Router* r);
+
 void LiberaRoteador(Router* r);
 
 void EncerraLista(List* t);

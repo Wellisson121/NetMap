@@ -14,7 +14,7 @@ struct conexao{
 
 struct malha{
     Conexao* equipamento;
-    Conexao* prox;
+    Malha* prox;
 };
 
 struct lista{
@@ -34,9 +34,13 @@ Lista3* criaLista(){
 
 Malha* criaMalha(Lista3* l){
     Malha* m;
+    Conexao* eq;
     m = (Malha*)malloc(sizeof (Malha));
-    m->equipamento->roteador = carregaLista();
-    m->equipamento->terminal = carregaLista();
+    eq = (Conexao*)malloc(sizeof(Conexao));
+    eq->roteador = carregaLista();
+    eq->terminal = carregaListaTerminal();
+    eq->rot = NULL;
+    m->equipamento = eq;
     m->prox = l->primeiro;
     l->primeiro = m;
     if(l->ultimo == NULL){
@@ -88,13 +92,52 @@ void iniciaConexaoTerminal(Lista3* l, Router *r, tlista* t, Terminal* s){
 void removeConexaoRoteadores(Lista3* m,List* rot, char* nome){
     Malha* prim = m->primeiro;
     Malha* ult = NULL;
-    while (m != NULL && prim->equipamento->rot != rot) {
+    Conexao* c;
+    Router* r;
+    char nome2[10];
+    while (m != NULL) {
+        c = m->primeiro->equipamento;
+        c->rot= buscaRoteador(rot,nome);
+        r = c->rot;
+        strcpy(nome2,nomeRoteador(r));
+        if(nome2 == nome){
+          RemoveRoteador(rot,nome);
+          break;
+        }
         ult = prim;
         prim = prim->prox;
     }
-    if(prim->equipamento->rot == rot){
-        RemoveRoteador(rot,nome);
-    }
+
+}
+
+char* nomeEnlace(Lista3* c){
+  Malha* con;
+  Conexao* eq;
+  con = c->primeiro;
+  eq = con->equipamento;
+  Router* r = eq->rot;
+  return nomeRoteador(r);
+}
+
+tlista* capturaListaTerminal(Lista3* t, char* nome){
+    Malha *m = t->primeiro;
+    Conexao *c = m->equipamento;
+    tlista *t1 = c->terminal;
+    buscaTerminal(t1,nome);
+}
+
+List* capturaListaRoteador(Lista3* l, List* l1){
+  Malha* m = l->primeiro;
+  Conexao* c = m->equipamento;
+  Router* r = c->rot;
+  buscaRoteador(l1,nomeRoteador(r));
+}
+
+List* capturaListaRoteadorRemocao(Lista3* m){
+    Malha* n = m->primeiro;
+    Conexao* c = n->equipamento;
+    List* l = c->roteador;
+    return l;
 }
 
 

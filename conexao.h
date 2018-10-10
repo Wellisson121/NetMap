@@ -47,6 +47,14 @@ o nome do roteador a ser retirado
 Saida: nenhum*/
 void removeConexaoRoteadores(Lista3* m,List* rot, char* nome);
 
+char* nomeEnlace(Lista3* c);
+
+tlista* capturaListaTerminal(Lista3* t, char* nome);
+
+List* capturaListaRoteador(Lista3* l, List* l1);
+
+List* capturaListaRoteadorRemocao(Lista3* m);
+
 /*Libera a lista de enlaces do NetMap*/
 void EncerraListaConexoes(Lista3* l);
 

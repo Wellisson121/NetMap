@@ -20,7 +20,7 @@ int main(int argc, char const **argv){
             FILE* fp = fopen(argv[1],"r");/*abre o arquivo de entrada*/
             do{
                 fscanf(fp,"%s",comando);
-                if(strcmp(comando,"CADASTRAROTEADOR" == 0)){
+                if(strcmp(comando,"CADASTRAROTEADOR") == 0){
                     fscanf(fp,"%s %s",var1,var2);
                     CadastraRoteador(var1,var2);
                 }else if (strcmp(comando,"CADASTRATERMINAL") == 0) {
@@ -33,17 +33,17 @@ int main(int argc, char const **argv){
                 }else if (strcmp(comando,"CONECTAROTEADORES") == 0) {
                     fscanf(fp,"%s %s",var1,var2);
                     Router* r1 = buscaRoteador(roteador,var1);
-                    Router* r2 = buscaRoteador(roteador, var2);
+                    Router* r2 = buscaRoteador(roteador,var2);
                     if((r1 != NULL) && (r2 != NULL)){
-                        if((existe(enlace,r1->nome) == 0) && (existe(enlace,r2->nome) == 0)){
+                        if((existe(enlace,nomeRoteador(r1)) == 0) && (existe(enlace,nomeRoteador(r2)) == 0)){
                             iniciaConexaoRoteadores(r1,r2,enlace);
                             iniciaConexaoRoteadores(r2,r1,enlace);
-                        }else if((existe(enlace,r1->nome) != 0) && (existe(enlace,r2->nome) == 0)){
+                        }else if((existe(enlace,nomeRoteador(r1)) != 0) && (existe(enlace,nomeRoteador(r2)) == 0)){
                             iniciaConexaoRoteadores(r2,r1,enlace);
-                            ConectaRoteador(r1,enlace->equipamento->roteador);
-                        }else if((existe(enlace,r1->nome) == 0) && (existe(enlace,r2->nome) != 0)){
-                           iniciaConexaoRoteadores(r1,r2,enlace);
-                           ConectaRoteador(r2,enlace->equipamento->roteador);
+                            ConectaRoteador(r1,capturaListaRoteador(enlace,roteador));
+                        }else if((existe(enlace,nomeRoteador(r1)) == 0) && (existe(enlace,nomeRoteador(r2)) != 0)){
+                            iniciaConexaoRoteadores(r1,r2,enlace);
+                            ConectaRoteador(r2,capturaListaRoteador(enlace,roteador));
                         }
                     }else if(r1 == NULL){
                         abreArquivoLog(var1,1);
@@ -56,8 +56,8 @@ int main(int argc, char const **argv){
                     Terminal* t1 = buscaTerminal(terminal,var1);
                     Router* r2 = buscaRoteador(roteador, var2);
                     if((t1 != NULL) && (r2 != NULL)){
-                        if((existe(enlace,t1->nome) == 0) && (existe(enlace,r2->nome) == 0)){
-                            iniciaConexaoTerminal(enlace,enlace->equipamento->rot->nome,enlace->equipamento->terminal,t1);
+                        if((existe(enlace,nomeTerminal(t1)) == 0) && (existe(enlace,nomeRoteador(r2)) == 0)){
+                            iniciaConexaoTerminal(enlace,nomeEnlace(enlace),capturaListaTerminal(enlace, var1),t1);
                         }
                     }else if(t1 == NULL){
                         abreArquivoLog(var1,1);
@@ -71,9 +71,9 @@ int main(int argc, char const **argv){
                     Router* r1 = buscaRoteador(roteador,var1);
                     Router* r2 = buscaRoteador(roteador, var2);
                     if((r1 != NULL) && (r2 != NULL)){
-                        if((existe(enlace,r1->nome) == 1) && (existe(enlace,r2->nome) == 1)){
-                            removeConexaoRoteadores(enlace,enlace->eqipamento->roteador,r1->nome);
-                            removeConexaoRoteadores(enlace,enlace->eqipamento->roteador,r2->nome);
+                        if((existe(enlace,nomeRoteador(r1)) == 1) && (existe(enlace,nomeRoteador(r2)) == 1)){
+                            removeConexaoRoteadores(enlace,capturaListaRoteadorRemocao(enlace),nomeRoteador(r1));
+                            removeConexaoRoteadores(enlace,capturaListaRoteadorRemocao(enlace),nomeRoteador(r2));
                         }
                     }
                 }else if (strcmp(comando,"DESCONECTATERMINAL") == 0) {

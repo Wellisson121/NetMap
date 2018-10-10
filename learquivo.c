@@ -10,13 +10,13 @@ void abreArquivoLog(char const* nome, int id){
     fp = fopen("log.txt","a");
     switch (id) {
         case LEITURA:
-            fprintf(fp,"%s ","Erro: I/O, nao foi possivel abrir o arquivo %s",nome);
+            fprintf(fp,"Erro: I/O, nao foi possivel abrir o arquivo %s",nome);
             break;
         case ROUTER:
-            fprintf(fp,"%s","Erro: Roteador %s inexistente no NetMap",nome);
+            fprintf(fp,"Erro: Roteador %s inexistente no NetMap",nome);
             break;
         case TERMINAL:
-           fprintf(fp,"%s","Erro: Terminal %s inexistente no NetMap",nome);
+           fprintf(fp,"Erro: Terminal %s inexistente no NetMap",nome);
            break;
     }
     fclose(fp);
@@ -58,4 +58,5 @@ void fechaArquivoGraphViz(){
     FILE* fp;
     fp =fopen("saida.dot","a");
     fprintf(fp,"}");
+    fclose(fp);
 }

@@ -123,6 +123,10 @@ Router* buscaRoteador(List* t,char* nome){
     }
 }
 
+char* nomeRoteador(Router* r){
+  return r->nome;
+}
+
 void LiberaRoteador(Router* r){
     free(r->nome);
     free(r->operadora);
@@ -134,7 +138,7 @@ void EncerraLista(List* t){
     if(t != NULL){
         Sentry* new = t->primeiro;
         Sentry* tmp;
-        while (new !=NULL) {
+        while (new!=NULL) {
             tmp = new->prox;
             LiberaRoteador(new->rot);
             new = tmp;

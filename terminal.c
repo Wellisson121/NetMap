@@ -24,7 +24,7 @@ typedef struct terminal Terminal;
 typedef struct cell sentinel;
 */
 
-tlista* carregaLista(void){
+tlista* carregaListaTerminal(void){
     tlista* l;
     l = (tlista*)malloc(sizeof (tlista));
     l->primeiro = NULL;
@@ -120,6 +120,10 @@ int FrequenciaTerminal(tlista* r, char* local){
         }
         return cont;
     }else return -1;
+}
+
+char* nomeTerminal(Terminal* t){
+  return t->nome;
 }
 
 void EncerraListaTerminais(tlista* t){
