@@ -20,6 +20,10 @@ Router* buscaRoteador(List* t,char* nome);
 
 char* nomeRoteador(Router* r);
 
+char* operadoraRoteador(Router *s);
+
+char* getListFreq(List* l);
+
 void LiberaRoteador(Router* r);
 
 void EncerraLista(List* t);

@@ -79,11 +79,11 @@ int main(int argc, char const **argv){
                 }else if (strcmp(comando,"DESCONECTATERMINAL") == 0) {
 
                 }else if (strcmp(comando,"FREQUENCIAOPERADORA") == 0) {
-                    num = FrequenciaOperadora(roteador,roteador->rot->operadora);
-                    abreArquivoSaida(comando,roteador->rot->operadora,num);
+                    num = FrequenciaOperadora(roteador,getListFreq(roteador));
+                    abreArquivoSaida(comando,getListFreq(roteador),num);
                 }else if (strcmp(comando,"FREQUENCIATERMINAL") == 0) {
-                    num = FrequenciaTerminal(terminal,terminal->ter->local);
-                    abreArquivoSaida(comando,terminal->ter->local,num);
+                    num = FrequenciaTerminal(terminal,getListFreqT(terminal));
+                    abreArquivoSaida(comando,getListFreqT(terminal),num);
                 }else if (strcmp(comando,"ENVIARPACOTESDADOS")== 0) {
 
                 }

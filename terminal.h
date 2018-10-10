@@ -20,6 +20,10 @@ int FrequenciaTerminal(tlista* r, char* local);
 
 char* nomeTerminal(Terminal* t);
 
+char* localTerminal(Terminal* t);
+
+char* getListFreqT(tlista* l);
+
 void EncerraListaTerminais(tlista* t);
 
 #endif // TERMINAL_H

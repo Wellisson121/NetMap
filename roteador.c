@@ -127,6 +127,16 @@ char* nomeRoteador(Router* r){
   return r->nome;
 }
 
+char* operadoraRoteador(Router *s){
+    return s->operadora;
+}
+
+char* getListFreq(List* l){
+    Sentry* m = l->primeiro;
+    Router* rt = m->rot;
+    operadoraRoteador(rt);
+}
+
 void LiberaRoteador(Router* r){
     free(r->nome);
     free(r->operadora);

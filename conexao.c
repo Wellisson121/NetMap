@@ -140,7 +140,6 @@ List* capturaListaRoteadorRemocao(Lista3* m){
     return l;
 }
 
-
 void EncerraListaConexoes(Lista3* l){
     if(l != NULL){
         Malha* novo = l->primeiro;

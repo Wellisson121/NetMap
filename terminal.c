@@ -126,6 +126,16 @@ char* nomeTerminal(Terminal* t){
   return t->nome;
 }
 
+char* localTerminal(Terminal* t){
+    return t->local;
+}
+
+char* getListFreqT(tlista* l){
+    sentinel* m = l->primeiro;
+    Terminal* t = m->ter;
+    localTerminal(t);
+}
+
 void EncerraListaTerminais(tlista* t){
     if(t != NULL){
         sentinel* novo = t->primeiro;

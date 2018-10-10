@@ -2,7 +2,7 @@
 all: netMap
 
 netMap: conexao.o terminal.o roteador.o learquivo.o main.o
-	gcc conexao.o terminal.o roteador.o learquivo.o -o netMap
+	gcc conexao.o terminal.o roteador.o learquivo.o main.o -o netMap
 
 conexao.o: conexao.c
 	gcc -c conexao.c

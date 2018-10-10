@@ -13,10 +13,10 @@ void abreArquivoLog(char const* nome, int id){
             fprintf(fp,"Erro: I/O, nao foi possivel abrir o arquivo %s",nome);
             break;
         case ROUTER:
-            fprintf(fp,"Erro: Roteador %s inexistente no NetMap",nome);
+            fprintf(fp,"Erro: Roteador %s inexistente no NetMap\n",nome);
             break;
         case TERMINAL:
-           fprintf(fp,"Erro: Terminal %s inexistente no NetMap",nome);
+           fprintf(fp,"Erro: Terminal %s inexistente no NetMap\n",nome);
            break;
     }
     fclose(fp);
