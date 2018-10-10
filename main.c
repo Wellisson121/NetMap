@@ -89,7 +89,7 @@ int main(int argc, char const **argv){
                 }
             }while (strcmp(comando,"FIM")!=0);
             fclose(fp);/*fecha o arquivo de entrada de dados*/
-
+            fechaArquivoGraphViz();/*encerra as entradas pro graphviz*/
             /*Libera a memoria alocada*/
             EncerraLista(roteador);
             EncerraListaTerminais(terminal);

@@ -40,3 +40,22 @@ void abreArquivoSaida(char* comando,char* nome,int num){
     fclose(fp);
 
 }
+
+
+void abreArquivoGraphViz(char* nome1, char* nome2){
+    FILE* fp;
+    static int v = 0;
+    fp = fopen("saida.dot","a");
+    if(v == 0){
+        fprintf(fp,"strict graph {");
+        v++;
+    }
+    fprintf(fp,"\t%s -- %s", nome1,nome2);
+
+}
+
+void fechaArquivoGraphViz(){
+    FILE* fp;
+    fp =fopen("saida.dot","a");
+    fprintf(fp,"}");
+}

@@ -1,5 +1,6 @@
 #ifndef LEARQUIVO_H
 #define LEARQUIVO_H
+#include "conexao.h"
 
 /*
 Abre um arquivo chamado log.txt, onde ficam os erros de execucao
@@ -22,5 +23,9 @@ Entrada: Nome do comando executado,nome do roteador ou terminal,
 quantidade de roteadores ou terminais
 Saida: nenhuma*/
 void abreArquivoSaida(char* comando,char* nome,int num);
+
+void abreArquivoGraphViz(char* nome1, char* nome2);
+
+void fechaArquivoGraphViz(void);
 
 #endif // LEARQUIVO_H
