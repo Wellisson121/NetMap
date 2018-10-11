@@ -47,10 +47,11 @@ void abreArquivoGraphViz(char* nome1, char* nome2){
     static int v = 0;
     fp = fopen("saida.dot","a");
     if(v == 0){
-        fprintf(fp,"strict graph {");
+        fprintf(fp,"strict graph grafo {\n");
         v++;
     }
-    fprintf(fp,"\t%s -- %s", nome1,nome2);
+    fprintf(fp,"\t%s -- %s\n", nome1,nome2);
+    fclose(fp);
 
 }
 

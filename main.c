@@ -53,7 +53,7 @@ int main(int argc, char const **argv){
                         abreArquivoLog(var2,1);
                     }
 
-                }/*else if (strcmp(comando,"CONECTATERMINAL") == 0) {
+                }else if (strcmp(comando,"CONECTATERMINAL") == 0) {
                     fscanf(fp,"%s %s",var1,var2);
                     Terminal* t1 = buscaTerminal(terminal,var1);
                     Router* r2 = buscaRoteador(roteador, var2);
@@ -67,7 +67,7 @@ int main(int argc, char const **argv){
                         abreArquivoLog(var2,1);
                     }
                 }else if (strcmp(comando,"IMPRIMENETMAP") == 0) {
-
+                    
                 }else if (strcmp(comando,"DESCONECTAROTEADORES") == 0) {
                     fscanf(fp,"%s %s",var1,var2);
                     Router* r1 = buscaRoteador(roteador,var1);
@@ -88,14 +88,15 @@ int main(int argc, char const **argv){
                     abreArquivoSaida(comando,getListFreqT(terminal),num);
                 }else if (strcmp(comando,"ENVIARPACOTESDADOS")== 0) {
 
-                }*/
+                }
             }while (strcmp(comando,"FIM")!=0);
             fclose(fp);/*fecha o arquivo de entrada de dados*/
             fechaArquivoGraphViz();/*encerra as entradas pro graphviz*/
             /*Libera a memoria alocada*/
+            EncerraListaConexoes(enlace);
             EncerraLista(roteador);
             EncerraListaTerminais(terminal);
-            //EncerraListaConexoes(enlace);
+            
 
      }
    }

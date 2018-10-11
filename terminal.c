@@ -145,6 +145,7 @@ void EncerraListaTerminais(tlista* t){
             free(novo->ter->nome);
             free(novo->ter->local);
             free(novo->ter);
+            free(novo);
             novo = temp;
         }
         free(t);

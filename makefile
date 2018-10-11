@@ -19,5 +19,11 @@ learquivo.o: learquivo.c
 main.o: main.c
 	gcc -c main.c 
 
+graph:
+	neato -Tpdf saida.dot -o saida.pdf 
+
 clean:
 	rm -rf *.o
+
+run:
+	./netMap entrada.txt

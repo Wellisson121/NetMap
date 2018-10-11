@@ -52,10 +52,8 @@ Malha* criaMalha(Lista3* l){
 
 
 void iniciaConexaoRoteadores(Router* r, Router* s, Lista3* l){
-    Malha* m = l->primeiro;
-    if(m == NULL){
-        m->equipamento->rot = r;
-    }
+    Malha* m = criaMalha(l);
+    m->equipamento->rot = r;
     ConectaRoteador(s,m->equipamento->roteador);
 }
 
@@ -100,7 +98,7 @@ void removeConexaoRoteadores(Lista3* m,List* rot, char* nome){
         c->rot= buscaRoteador(rot,nome);
         r = c->rot;
         strcpy(nome2,nomeRoteador(r));
-        if(nome2 == nome){
+        if(strcmp(nome2 ,nome)==0){
           RemoveRoteador(rot,nome);
           break;
         }
@@ -130,8 +128,8 @@ List* capturaListaRoteador(Lista3* l, List* l1){
   Malha* m = l->primeiro;
   Conexao* c = m->equipamento;
   Router* r = c->rot;
-  buscaRoteador(l1,nomeRoteador(r));
-}
+  return buscaRoteador(l1,nomeRoteador(r));
+ }
 
 List* capturaListaRoteadorRemocao(Lista3* m){
     Malha* n = m->primeiro;

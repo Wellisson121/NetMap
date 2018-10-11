@@ -151,6 +151,7 @@ void EncerraLista(List* t){
         while (new!=NULL) {
             tmp = new->prox;
             LiberaRoteador(new->rot);
+            free(new);
             new = tmp;
         }
         free(t);
