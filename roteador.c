@@ -60,29 +60,29 @@ void ConectaRoteador(Router* r, List* s){
 
 
 void RemoveRoteador(List* r, char* nome){
+   
    Sentry* prim = r->primeiro;
    Sentry* ult = NULL;
    while ((prim != NULL) && (strcmp(prim->rot->nome,nome) != 0)) {
         ult = prim;
         prim = prim->prox;
    }
-
-   if(prim == r->primeiro && prim == r->ultimo){
+    if(prim == r->primeiro && prim == r->ultimo){
         r->primeiro = r->ultimo;
         r->ultimo = NULL;
-   }
-
+    }
+   
    if(prim == r->ultimo){
         r->ultimo = ult;
         ult->prox = NULL;
    }
-
+    
    if(prim == r->primeiro){
        r->primeiro = prim->prox;
    }else{
        ult->prox = prim->prox;
    }
-
+ 
    free(prim->rot->nome);
    free(prim->rot->operadora);
    free(prim->rot);

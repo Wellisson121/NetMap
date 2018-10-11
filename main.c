@@ -19,17 +19,19 @@ int main(int argc, char const **argv){
 
             FILE* fp = fopen(argv[1],"r");/*abre o arquivo de entrada*/
             do{
-                fscanf(fp,"%s",comando);
+                fscanf(fp,"%s ",comando);
                 if(strcmp(comando,"CADASTRAROTEADOR") == 0){
                     fscanf(fp,"%s %s",var1,var2);
-                    CadastraRoteador(var1,var2);
+                    ConectaRoteador(CadastraRoteador(var1,var2),roteador);
                 }else if (strcmp(comando,"CADASTRATERMINAL") == 0) {
                     fscanf(fp,"%s %s",var1,var2);
-                    CadastraTerminal(var1,var2);
+                    conectaTerminal(terminal,CadastraTerminal(var1,var2));
                 }else if (strcmp(comando,"REMOVEROTEADOR") == 0) {
-
+                    fscanf(fp,"%s",var1);
+                    RemoveRoteador(roteador,var1);
                 }else if (strcmp(comando,"REMOVETERMINAL") == 0) {
-
+                    fscanf(fp,"%s",var1);
+                    RemoveTerminal(terminal,var1);
                 }else if (strcmp(comando,"CONECTAROTEADORES") == 0) {
                     fscanf(fp,"%s %s",var1,var2);
                     Router* r1 = buscaRoteador(roteador,var1);
@@ -51,13 +53,13 @@ int main(int argc, char const **argv){
                         abreArquivoLog(var2,1);
                     }
 
-                }else if (strcmp(comando,"CONECTATERMINAL") == 0) {
+                }/*else if (strcmp(comando,"CONECTATERMINAL") == 0) {
                     fscanf(fp,"%s %s",var1,var2);
                     Terminal* t1 = buscaTerminal(terminal,var1);
                     Router* r2 = buscaRoteador(roteador, var2);
                     if((t1 != NULL) && (r2 != NULL)){
                         if((existe(enlace,nomeTerminal(t1)) == 0) && (existe(enlace,nomeRoteador(r2)) == 0)){
-                            iniciaConexaoTerminal(enlace,nomeEnlace(enlace),capturaListaTerminal(enlace, var1),t1);
+                            iniciaConexaoTerminal(enlace,capturaListaRoteador(enlace,roteador),capturaListaTerminal(enlace, var1),t1);
                         }
                     }else if(t1 == NULL){
                         abreArquivoLog(var1,1);
@@ -86,16 +88,16 @@ int main(int argc, char const **argv){
                     abreArquivoSaida(comando,getListFreqT(terminal),num);
                 }else if (strcmp(comando,"ENVIARPACOTESDADOS")== 0) {
 
-                }
+                }*/
             }while (strcmp(comando,"FIM")!=0);
             fclose(fp);/*fecha o arquivo de entrada de dados*/
             fechaArquivoGraphViz();/*encerra as entradas pro graphviz*/
             /*Libera a memoria alocada*/
             EncerraLista(roteador);
             EncerraListaTerminais(terminal);
-            EncerraListaConexoes(enlace);
+            //EncerraListaConexoes(enlace);
 
      }
-    return 0;
    }
+    return 0;
 }

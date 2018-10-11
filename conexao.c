@@ -146,7 +146,6 @@ void EncerraListaConexoes(Lista3* l){
         Malha* t;
         while (novo != NULL) {
             t = novo->prox;
-            LiberaRoteador(novo->equipamento->rot);
             EncerraLista(novo->equipamento->roteador);
             EncerraListaTerminais(novo->equipamento->terminal);
             free(novo->equipamento);
